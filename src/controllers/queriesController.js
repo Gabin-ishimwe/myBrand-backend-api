@@ -1,5 +1,5 @@
 import QueryService from "../services/queryServices"
-import queryModel from "../../models/query"
+import queryModel from "../models/query"
 
 export default class QueryController {
      static async creatingQuery(req, res){

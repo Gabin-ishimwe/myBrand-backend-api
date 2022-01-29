@@ -1,6 +1,6 @@
-import mongoose from mongoose
+import mongoose from "mongoose"
 
-const queryModel = mongoose.schema({
+const queryModel = mongoose.Schema({
      name: {
           type: String
      },
@@ -18,7 +18,7 @@ const queryModel = mongoose.schema({
      },
 
      date: {
-          type:date,
+          type:Date,
           default: Date.now()
      }
      

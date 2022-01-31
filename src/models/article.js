@@ -10,8 +10,13 @@ const dbSchema = mongoose.Schema({
           type: String
      },
 
+     image: {
+          type: String,
+          require: true
+     },
+
      comments: {
-          type: String
+          type: Array,
      },
      likes: {
           type: Number,

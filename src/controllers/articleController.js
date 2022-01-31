@@ -1,43 +1,102 @@
 import ArticleServices from "../services/articleServices"
 import dbSchema from "../models/article"
+import { uploading } from "../helpers/uploadFile"
+import res from "express/lib/response"
 export default class ArticleController {
     // TODO Don't access database from this file you only needs
     // constructor(_dbSchema) {
     //     this.schema = dbSchema
     // }
     static async createArticle(req, res) { 
-        const newArticle  = new dbSchema({
-            title: req.body.title,
-            content: req.body.content
-        })
-        await ArticleServices.createArticle(newArticle)
-        res.send(newArticle)
+        try {
+            req.body.image = await uploading(req, res)
+            const newArticle  = new dbSchema({
+                title: req.body.title,
+                content: req.body.content,
+                image: req.body.image,
+            })
+            console.log(req.body)
+            await ArticleServices.createArticle(newArticle)
+            console.log("saved article")
+            res.status(202).send({message: "article created", data: newArticle})
+
+        }catch(error) {
+            res.status(404).send({error: error})
+        }
     }
     static async getAllArticles(req, res, next) { 
-        const all = await ArticleServices.getAllArticles()
-        res.send(all)
-    }
-    static async getArticle(req, res, next) {
-        const getOne = await ArticleServices.getArticle(req.params.id)
-        res.send(getOne)
-    }
-    static async updateArticle(req, res, next) {
-        const updating = await ArticleServices.updateArticle(req.params.id)
-        console.log(updating)
-        if(req.body.title){
-            updating.title = req.body.title
-        }
-        if(req.body.content) {
-            updating.content = req.body.content
+        try {
+            const all = await ArticleServices.getAllArticles()
+            res.status(202).send({message:"all article!!!!", data:all})
+        } catch (error) {
+            res.status(404).send({error: error})
+            
         }
         
-        await updating.save()
+    }
+    static async getArticle(req, res, next) {
+        try {
+            const getOne = await ArticleServices.getArticle(req.params.id)
+            res.status(202).send(getOne)
+        } catch (error) {
+            res.status(404).send({error: error})
+            
+        }
+        
+    }
+    static async updateArticle(req, res, next) {
+        try {
+            const updating = await ArticleServices.updateArticle(req.params.id)
+        
+            if(req.body.title){
+                updating.title = req.body.title
+                console.log("updating title....")
+            }
+            if(req.body.content) {
+                updating.content = req.body.content
+            }
 
-        res.send(updating)
+            if(req.body.image) {
+                req.body.image = await uploading(req, res)
+                updating.image = req.body.image
+            }
+            res.status(202).send({message: "article updated!!!",data:updating})
+            
+            
+            await updating.save()
+            } catch (error) {
+                res.status(404).send({error: error})
+            
+        }
+        
+        // console.log(updating)
+        // console.log(req)
+        // console.log(req.body.image)
+        // console.log(req.body.content)
+
+        // try {
+        //     const updating = await dbSchema.updateOne({_id:req.params.id}, {
+        //     $set: {title: req.body.title, content: req.body.content, image: req.body.image}}
+        // )
+        // console.log("updating...")
+        // await ArticleServices.updateArticle(updating)
+        // res.json(updating)
+        // console.log(updating)
+        // } catch (error) {
+        //     res.send(error)
+        // }
+        
     }
     static async deleteArticle(req, res, next) {
-        const removed = await ArticleServices.deleteArticle(req.params.id)
-        res.send(removed)
+        try {
+           const removed = await ArticleServices.deleteArticle(req.params.id)
+            res.status(202).send({message: "article deleted"}) 
+        } catch (error) {
+            res.status(404).send({error: error})
+            
+        }
+        
      }
+
 }
 

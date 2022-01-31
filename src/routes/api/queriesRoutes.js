@@ -3,9 +3,9 @@ import QueryController from '../../controllers/queriesController.js'
 
 const route = express.Router()
 
-route.get('/getAll', QueryController.getAllQueries)
+route.get('/', QueryController.getAllQueries)
 
-route.post('/createQuerie', QueryController.creatingQuery)
+route.post('/', QueryController.creatingQuery)
 
 route.delete("/delete/:id", QueryController.deleteQueries)
 

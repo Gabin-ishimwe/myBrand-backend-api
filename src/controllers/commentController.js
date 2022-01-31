@@ -5,13 +5,18 @@ import dbSchema from '../models/article';
 export default class CommentController {
      static async createComment(req, res) {
           try {
+               // let currentComment = {}
                const commentingArticle = await CommentService.createComments(req.params.id)
 
                const createComment = new commentSchema({
+                    name: req.body.name,
                     content: req.body.content
                })
+               // currentComment.name = createComment.name
+               // currentComment.content = createComment.content
+               // console.log(createComment)
 
-               await commentingArticle.comments.push(createComment.content)
+               await commentingArticle.comments.push(createComment)
 
                await commentingArticle.save()
 

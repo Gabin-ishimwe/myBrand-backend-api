@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
 
 const commentSchema = mongoose.Schema({
-     // articleId: {
-     //      type: String,
-     // },
+     name: {
+          type: String,
+     },
 
      content: {
           type: String,

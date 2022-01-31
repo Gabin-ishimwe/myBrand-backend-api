@@ -7,9 +7,9 @@ const route = express.Router()
 const storageFile = multer.diskStorage({}) // take none because image will be upload on cloudinary no locally
 const upload = multer({storage: storageFile, file: fileFilter})
 
-route.post('/create', upload.single("image"),  ArticleController.createArticle)
+route.post('/', upload.single("image"),  ArticleController.createArticle)
 
-route.get("/all", ArticleController.getAllArticles)
+route.get("/", ArticleController.getAllArticles)
 
 route.get("/:id", ArticleController.getArticle)
 

@@ -13,4 +13,8 @@ export default class QueryService {
      static async deleteQueries(id) {
           return await queryModel.remove({_id:id})
      }
+
+     static async getOneQuery(id) {
+          return await queryModel.findById(id)
+     }
 }

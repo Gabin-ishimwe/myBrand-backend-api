@@ -46,7 +46,7 @@ export default class QueryController {
                     res.status(202).send(oneQuery)
                }
                else {
-                    res.status(205).send({message: "query has been deleted"})
+                    res.status(205).send({message: "query not available!!"})
                }
                
           }catch(error) {

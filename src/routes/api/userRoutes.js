@@ -1,9 +1,11 @@
+import userController from '../../controllers/userController'
+import UserValidation from '../../validations/userValidation/userValidation'
 import express from 'express'
+import { authenticateApi } from '../../middlewares/authentication'
 
 const route = express.Router()
 
-route.get('/', (req, res, next) => {
-    res.status(200).json({ status: 200, message: "this will return all users", data: "" })
-})
+route.post('/register', authenticateApi, UserValidation.userSignIn, userController.userSignUp)
+route.post('/login', authenticateApi, UserValidation.userLogin, userController.userLogin)
 
 export default route

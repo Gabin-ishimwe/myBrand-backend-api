@@ -1,15 +1,16 @@
 import express from 'express'
 import QueryController from '../../controllers/queriesController.js'
-
+import QueryValidation from '../../validations/queryValidation/queryValidation.js'
+import { authenticateApi } from '../../middlewares/authentication.js'
 const route = express.Router()
 
-route.get('/', QueryController.getAllQueries)
+route.get('/', authenticateApi, QueryController.getAllQueries)
 
-route.post('/', QueryController.creatingQuery)
+route.post('/', QueryValidation.createQuery, QueryController.creatingQuery)
 
-route.delete("/delete/:id", QueryController.deleteQueries)
+route.delete("/delete/:id", authenticateApi, QueryController.deleteQueries)
 
-route.get("/getOne/:id", QueryController.getOneQuery)
+route.get("/getOne/:id", authenticateApi, QueryController.getOneQuery)
 
 export default route
 

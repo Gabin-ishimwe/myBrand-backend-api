@@ -3,24 +3,27 @@ import ArticleController from "../../controllers/articleController"
 import CommentController from '../../controllers/commentController'
 import multer from "multer"
 import { fileFilter } from '../../helpers/fileFilter'
+import ArticleValidation from '../../validations/articlevalidation/articleValidation'
+import CommentValidation from '../../validations/commentValidation/commentValidation'
+import { authenticateApi } from '../../middlewares/authentication'
 const route = express.Router()
 const storageFile = multer.diskStorage({}) // take none because image will be upload on cloudinary no locally
 const upload = multer({storage: storageFile, file: fileFilter})
 
-route.post('/', upload.single("image"),  ArticleController.createArticle)
+route.post('/', authenticateApi, upload.single("image"), ArticleValidation.creatingArticle, ArticleController.createArticle)
 
 route.get("/", ArticleController.getAllArticles)
 
 route.get("/:id", ArticleController.getArticle)
 
-route.patch("/:id", upload.single("image"), ArticleController.updateArticle)
+route.patch("/:id", authenticateApi, upload.single("image"), ArticleValidation.creatingArticle, ArticleController.updateArticle)
 
-route.delete("/:id", ArticleController.deleteArticle)
+route.delete("/:id", authenticateApi, ArticleController.deleteArticle)
 
-route.post("/:id/addComment", CommentController.createComment)
+route.post("/:id/addComment", authenticateApi, CommentValidation.creatingComment, CommentController.createComment)
 
-route.get("/:id/deleteComments", CommentController.deleteComments)
+route.delete("/:id/deleteComments", authenticateApi, CommentController.deleteComments)
 
-route.get("/:id/deleteOneComment/:commentNum", CommentController.deleteOneComment)
+route.delete("/:id/deleteOneComment/:commentNum", authenticateApi,CommentController.deleteOneComment)
 
 export default route

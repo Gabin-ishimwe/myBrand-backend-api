@@ -20,7 +20,7 @@ route.patch("/:id", authenticateApi, upload.single("image"), ArticleValidation.c
 
 route.delete("/:id", authenticateApi, ArticleController.deleteArticle)
 
-route.post("/:id/addComment", authenticateApi, CommentValidation.creatingComment, CommentController.createComment)
+route.post("/:id/addComment", CommentValidation.creatingComment, CommentController.createComment)
 
 route.delete("/:id/deleteComments", authenticateApi, CommentController.deleteComments)
 

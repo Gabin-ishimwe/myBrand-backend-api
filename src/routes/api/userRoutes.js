@@ -5,7 +5,7 @@ import { authenticateApi } from '../../middlewares/authentication'
 
 const route = express.Router()
 
-route.post('/register', authenticateApi, UserValidation.userSignIn, userController.userSignUp)
+route.post('/register', UserValidation.userSignIn, userController.userSignUp)
 route.post('/login', authenticateApi, UserValidation.userLogin, userController.userLogin)
 
 export default route

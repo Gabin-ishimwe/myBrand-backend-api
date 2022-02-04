@@ -87,7 +87,6 @@ describe("ARTICLES", () => {
                     likes: 0
 
                })
-               console.log(res)
                chai.expect(res.status).to.be.eq(400)
                chai.expect(res.body).to.have.property("errorMessage")
                chai.expect(res.body.errorMessage).to.be.eq("Article title required!!!")
@@ -104,7 +103,6 @@ describe("ARTICLES", () => {
                     likes: 0
 
                })
-               console.log(res)
                chai.expect(res.status).to.be.eq(400)
                chai.expect(res.body.errorMessage).to.be.eq("Article content must be of min 100 characters!!!")
           })
@@ -194,7 +192,6 @@ describe("ARTICLES", () => {
                const res = await chai.request(app).delete("/api/v1/articles/" + testSchema._id + "/deleteOneComment/"+ 0)
                .send(commentTest)
                .set({"Authorization": `Beare ${token}`})
-               console.log(res)
                chai.expect(res.status).to.be.eq(205)
                chai.expect(res.body.message).to.be.eq("there are no comments")
           })

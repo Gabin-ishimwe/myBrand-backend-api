@@ -11,7 +11,7 @@ on:
 
 env:
   TOKEN_SECRET: ${{secrets.TOKEN_SECRET}}
-  PRODUCTION_DB: ${{secrets.PRODUCTION_DB}}
+  TEST_DB: ${{secrets.TEST_DB}}
 
 jobs:
   build:

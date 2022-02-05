@@ -20,13 +20,6 @@ describe("ARTICLES", () => {
           
      })
 
-     // afterEach(async(done) => {
-     //      await dbSchema.clear((err) => {
-     //           if (err) console.log(error)
-     //      })
-     //      done()
-     // })
-
      describe("TESTING GET ALL ARTICLES", () => {
           it("it should retrieve all articles", async () => {
                const res = await chai.request(app).get("/api/v1/articles")
@@ -125,20 +118,6 @@ describe("ARTICLES", () => {
           })
      })
 
-     // describe("UPDATE POST", () => {
-     //      it("update existing post", async () => {
-     //           const id = testSchema._id
-     //           const token = await generateToken({id: testSchema._id})
-     //           const res = await chai.request(app).patch("/api/v1/articles/" + id)
-     //           .set({"Authorization": `Bearer ${token}`})
-     //           .send({
-     //                title: "update this article",
-     //           })
-     //           // console.log(res)
-     //           chai.expect(res.body.message).to.eq("article updated!!!")
-
-     //      })
-     // })
 
      describe("ARTICLE COMMENTS", () => {
           it("it should test name validation", async() => {

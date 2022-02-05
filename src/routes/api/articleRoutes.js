@@ -16,7 +16,7 @@ route.get("/", ArticleController.getAllArticles)
 
 route.get("/:id", ArticleController.getArticle)
 
-route.patch("/:id", authenticateApi, upload.single("image"), ArticleValidation.creatingArticle, ArticleController.updateArticle)
+route.patch("/:id", authenticateApi, upload.single("image"), ArticleController.updateArticle)
 
 route.delete("/:id", authenticateApi, ArticleController.deleteArticle)
 

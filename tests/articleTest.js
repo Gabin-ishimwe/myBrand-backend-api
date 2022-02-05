@@ -177,7 +177,6 @@ describe("ARTICLES", () => {
                const res = await chai.request(app).delete("/api/v1/articles/" + testSchema._id + "/deleteComments")
                .send(commentTest)
                .set({"Authorization": `Beare ${token}`})
-               console.log(res)
                chai.expect(res.status).to.be.eq(205)
                chai.expect(res.body.message).to.be.eq("there are no comments")
           })

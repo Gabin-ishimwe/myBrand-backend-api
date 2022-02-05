@@ -1,0 +1,436 @@
+{
+     "swagger": "2.0",
+     "info": {
+          "title": "MyBrand Backend",
+          "description": "API of my portfolio",
+          "version": "1.0.0"
+     },
+     "servers": [
+          {
+               "url": "http://localhost:3000",
+               "name": "DEVELOPMENT"
+          }
+     ],
+
+     "paths": {
+          "/": {
+               "get": {
+                    "tags": ["Home"],
+                    "summary": "Home",
+                    "description": "Home",
+                    "operationId": "getHome",
+                    "responses": {
+                         "200": {
+                              "description": "Success"
+                         }
+                    }
+               }
+          },
+
+          "/api/v1/user/register": {
+               "post": {
+               "tags": ["Users"],
+               "summary": "Registering",
+               "description": "user register",
+               "operationId": "postUsersRegister",
+               "parameters": [
+                    {
+                    "name": "body",
+                    "in": "body",
+                    "description": "Login",
+                    "required": true,
+                    "schema": {
+                    "$ref": "#/definitions/register"
+                         }
+                    }
+               ],
+               "responses": {
+                    "200": {
+                    "description": "Success"
+                         }
+                    }
+               }
+          },
+
+          "/api/v1/user/login": {
+               "post": {
+               "tags": ["Users"],
+               "summary": "Logging",
+               "description": "user login",
+               "operationId": "postUsersLogin",
+               "parameters": [
+                    {
+                    "name": "body",
+                    "in": "body",
+                    "description": "Login",
+                    "required": true,
+                    "schema": {
+                    "$ref": "#/definitions/login"
+                         }
+                    }
+               ],
+               "responses": {
+                    "200": {
+                    "description": "Success"
+                         }
+                    }
+               }
+          },
+
+          "/api/v1/articles/": {
+               "get": {
+                    "tags": ["Articles"],
+                    "summary": "get all articles",
+                    "description": "end point that retrieves all articles",
+                    "responses": {
+                         "202": {
+                              "description" : "list of all articles"
+                         }
+                    }
+               },
+               "post": {
+                    "tags": ["Articles"],
+                    "summary": "create article",
+                    "description": "end point that creates an article",
+                    "parameters": [
+                         {
+                         "name": "Authorization",
+                         "in": "header",
+                         "description": "Authorization",
+                         "required": true
+                         },
+                         {
+                              "in": "formData",
+                              "name": "title",
+                              "description": "article title",
+                              "required": true
+                         },
+                         {
+                              "in": "formData",
+                              "name": "content",
+                              "description": "article content",
+                              "required": true
+                         },
+                         {
+                              "in": "formData",
+                              "name": "image",
+                              "type": "file",
+                              "description": "article image",
+                              "required": true
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "list of all articles"
+                         }
+                    }
+               }
+          },
+
+          "/api/v1/articles/{id}": {
+               "get": {
+                    "tags": ["Articles"],
+                    "summary": "get one articles by id",
+                    "description": "end point that retrieves one articles by its id",
+                    "parameters": [
+                         {
+                              "in": "path",
+                              "name": "id",
+                              "required": true,
+                              "description": "article id"
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "success"
+                         }
+                    }
+               },
+
+               "patch": {
+                    "tags": ["Articles"],
+                    "summary": "updating article",
+                    "description": "updating an article by its id",
+                    "parameters": [
+                         {
+                              "in": "header",
+                              "name": "Authorization",
+                              "required": true,
+                              "description": "Authorization"
+                         }
+                         ,{
+                              "in": "path",
+                              "name": "id",
+                              "description": "article id"
+                         },
+                         {
+                              "in": "formData",
+                              "name": "title",
+                              "description": "article title"
+                         },
+                         {
+                              "in": "formData",
+                              "name": "content",
+                              "description": "article content"
+                         },
+                         {
+                              "in": "formData",
+                              "name": "image",
+                              "description": "article image",
+                              "type": "file"
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "success"
+                         }
+                    }
+               },
+
+               "delete": {
+                    "tags": ["Articles"],
+                    "summary": "delete an article",
+                    "description": "end point that delete one articles by its id",
+                    "parameters": [
+                         {
+                              "in": "header",
+                              "name": "Authorization",
+                              "required": true,
+                              "description": "Authorization"
+                         }
+                         ,{
+                              "in": "path",
+                              "name": "id",
+                              "required": true,
+                              "description": "article id"
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "success"
+                         }
+                    }
+               }
+
+          },
+
+          "/api/v1/articles/{id}/addComment": {
+               "post": {
+                    "tags": ["Articles"],
+                    "summary": "post comment on article",
+                    "description": "post a comment on a specified article",
+                    "parameters": [
+                         {
+                              "in": "path",
+                              "name": "id",
+                              "required": true,
+                              "description": "article id"
+                         },
+                         {
+                              "in": "body",
+                              "name": "body",
+                              "required": true,
+                              "description": "comments section",
+                              "schema": {
+                                   "$ref": "#/definitions/comments"
+                              }
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "success"
+                         }
+                    }
+               }
+
+          },
+
+          "/api/v1/articles/{id}/deleteComments": {
+               "delete": {
+                    "tags": ["Articles"],
+                    "summary": "delete all comments",
+                    "description": "delete all comments on that article",
+                    "parameters": [
+                         {
+                              "in": "header",
+                              "name": "Authorization",
+                              "required": true,
+                              "description": "Authorization"
+                         }, 
+                         {
+                              "in": "path",
+                              "name": "id",
+                              "required": true,
+                              "description": "article id"
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "success"
+                         }
+                    }
+               }
+          },
+
+          "/api/v1/queries/": {
+               "post": {
+                    "tags": ["Queries"],
+                    "summary": "creating queries",
+                    "description": "queries created from user",
+                    "operationId": "postQueries",
+                    "parameters": [
+                         {
+                         "name": "body",
+                         "in": "body",
+                         "description": "Query",
+                         "required": true,
+                         "schema": {
+                         "$ref": "#/definitions/query"
+                              }
+                         }
+                    ],
+                    "responses": {
+                         "200": {
+                         "description": "Success"
+                         }
+                    }
+               },
+               "get": {
+                    "tags": ["Queries"],
+                    "summary": "get all queries",
+                    "description": "end point that retrieves all queries",
+                    "parameters": [
+                         {
+                              "in": "header",
+                              "name": "Authorization",
+                              "required": true,
+                              "description": "Authorization"
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "list of all queries"
+                         }
+                    }
+               }
+               
+          },
+
+          "/api/v1/queries/getOne/{id}": {
+               "get": {
+                    "tags": ["Queries"],
+                    "summary": "get queries by id",
+                    "description": "end point that retrieves gets queries by id",
+                    "parameters": [
+                         {
+                              "in": "header",
+                              "name": "Authorization",
+                              "required": true,
+                              "description": "Authorization"
+                         },
+                         {
+                              "in": "path",
+                              "name": "id",
+                              "description": "query id",
+                              "required": true
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "list of all queries"
+                         }
+                    }
+               }
+          },
+
+          "/api/v1/queries/delete/{id}": {
+               "delete": {
+                    "tags": ["Queries"],
+                    "summary": "get queries by id",
+                    "description": "end point that retrieves gets queries by id",
+                    "parameters": [
+                         {
+                              "in": "header",
+                              "name": "Authorization",
+                              "required": true,
+                              "description": "Authorization"
+                         },
+                         {
+                              "in": "path",
+                              "name": "id",
+                              "description": "query id",
+                              "required": true
+                         }
+                    ],
+                    "responses": {
+                         "202": {
+                              "description" : "list of all queries"
+                         }
+                    }
+               }
+          }
+     },
+
+       "definitions": {
+          "register": {
+               "type": "object",
+               "properties": {
+                    "name": {
+                         "type": "string"
+                    },
+
+                    "email": {
+                         "type": "string"
+                    },
+
+                    "password": {
+                         "type": "string"
+                    }
+               }
+          },
+
+          "login": {
+               "type": "object",
+               "properties": {
+                    "email": {
+                         "type": "string"
+                    },
+
+                    "password": {
+                         "type": "string"
+                    }
+               }
+          },
+
+          "query": {
+               "type": "object",
+               "properties": {
+                    "name": {
+                         "type": "string"
+                    },
+                    "email": {
+                         "type": "string"
+                    },
+
+                    "message": {
+                         "type": "string"
+                    },
+                    "location": {
+                         "type": "string"
+                    }
+               }
+          },
+
+          "comments": {
+               "type": "object",
+               "properties": {
+                    "name": {
+                         "type": "string"
+                    },
+                    "content": {
+                         "type": "string"
+                    }
+               }
+          }
+     }
+}

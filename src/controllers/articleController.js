@@ -15,13 +15,12 @@ export default class ArticleController {
                 content: req.body.content,
                 image: req.body.image,
             })
-            console.log(req.body)
             await ArticleServices.createArticle(newArticle)
             console.log("saved article")
             res.status(202).send({message: "article created", data: newArticle})
 
         }catch(error) {
-            res.status(404).send({error: error})
+            res.status(404).send({error: "Image not uploaded"})
         }
     }
     static async getAllArticles(req, res, next) { 

@@ -55,8 +55,8 @@ export default class ArticleController {
                 updating.content = req.body.content
             }
 
+            req.body.image = await uploading(req, res)
             if(req.body.image) {
-                req.body.image = await uploading(req, res)
                 updating.image = req.body.image
             }
             res.status(202).send({message: "article updated!!!",data:updating})

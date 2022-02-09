@@ -46,7 +46,7 @@ export default class QueryController {
                     res.status(202).send(oneQuery)
                }
                else {
-                    res.status(205).send({message: "query not available!!"})
+                    res.status(205).send({error: "query not available!!"})
                }
                
           }catch(error) {

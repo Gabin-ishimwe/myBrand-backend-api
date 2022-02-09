@@ -10,5 +10,9 @@ export const articleSchema = joi.object({
           "string.empty": "Article content required!!!",
           "string.min": "Article content must be of min 100 characters!!!",
           "any.required": "Article title required!!!"
-     })
+     }),
+
+     likes: joi.number(),
+
+     comments: joi.array()
 });

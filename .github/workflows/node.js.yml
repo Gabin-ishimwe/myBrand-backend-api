@@ -12,6 +12,9 @@ on:
 env:
   TOKEN_SECRETE: ${{secrets.TOKEN_SECRETE}}
   TEST_DB: ${{secrets.TEST_DB}}
+  CLOUDINARY_USER_NAME: ${{secrets.CLOUDINARY_USER_NAME}}
+  CLOUDINARY_API_KEY: ${{secrets.CLOUDINARY_API_KEY}}
+  CLOUDINARY_URL: ${{secrets.CLOUDINARY_URL}}
 
 jobs:
   build:

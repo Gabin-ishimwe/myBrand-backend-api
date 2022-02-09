@@ -17,7 +17,13 @@ describe("TESTING USER ROUTE", () => {
           await testSchema.save()
      })
 
+     
+
      describe("SIGN IN ROUTE", () => {
+          before(async() => {
+               await userModel.deleteMany({})
+          })
+
           it("user sign in with no name", async() => {
                const res = await chai.request(app).post("/api/v1/user/register")
                .send({
@@ -50,6 +56,34 @@ describe("TESTING USER ROUTE", () => {
                chai.expect(res.status).to.be.eq(400)
                chai.expect(res.body.error).to.be.eq("Password is required!!!")
           })
+
+          it("user register in their account", async() => {
+               const res = await chai.request(app).post("/api/v1/user/register")
+               .send({
+                    name: "alexi", 
+                    email: "alexis@gmail.com",
+                    password: "pass123#"
+               })
+               chai.expect(res.status).to.be.eq(202)
+
+          })
+
+          it("user register in their account with email arleady exist", async() => {
+               // let register = new userModel({
+               //      name: "alexi", 
+               //      email: "gabin@gmail.com",
+               //      password: "pass123#"
+               // })
+               // await register.save()
+               const res = await chai.request(app).post("/api/v1/user/register")
+               .send({
+                    name: "alexi", 
+                    email: "alexis@gmail.com",
+                    password: "pass123#"
+               })
+               chai.expect(res.status).to.be.eq(404)
+
+          })
      })
 
      describe("SIGIN VALIDATION", () => {
@@ -73,6 +107,18 @@ describe("TESTING USER ROUTE", () => {
                })
                chai.expect(res.status).to.be.eq(400)
                chai.expect(res.body.error).to.be.eq("Password must container at least one special character and number!!!")
+          })
+     })
+
+     describe("USER LOGING IN", () => {
+          it("it should login in the user", async() => {
+               const res = await chai.request(app).post("/api/v1/user/login")
+               .send({
+                    email: "alexis@gmail.com",
+                    password: "pass123#"
+               })
+               chai.expect(res.status).to.be.eq(202)
+              
           })
      })
 

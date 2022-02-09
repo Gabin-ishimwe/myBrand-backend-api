@@ -95,7 +95,7 @@ export default class ArticleController {
             
         }
         
-     }
+    }
 
 }
 

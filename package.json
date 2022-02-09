@@ -18,7 +18,7 @@
       }
     },
     "test": {
-      "command": "nyc --reporter=html --reporter=text mocha --requre @babel/register ./tests/* --timeout 1000000 --exit || true",
+      "command": "nyc --reporter=html --reporter=text mocha --requre @babel/register --exclude ./tests/testingImage ./tests/* --timeout 1000000 --exit || true",
       "env": {
         "NODE_ENV": "test",
         "PORT": 5000

@@ -5,6 +5,7 @@ import dbSchema from "../src/models/article"
 import { generateToken } from "../src/helpers/jwtFunction";
 import commentSchema from "../src/models/comment"
 import fs from "fs"
+import path from "path"
 
 chai.use(chaiHttp)
 
@@ -122,12 +123,11 @@ describe("ARTICLES", () => {
                const res = await chai.request(app).post("/api/v1/articles/")
                .set({"Authorization": `Bearer ${token}`})
                // .type("form")
-               .attach("image", await fs.readFileSync("C:/Users/Admin/Downloads/linkedinAboutMe.png"), "linkedinAboutMe.png")
+               .attach("image", path.join( __dirname, "./testingImage/linkedinAboutMe.png"), "linkedinAboutMe.png")
                .field("title", "Creating article")
                .field("content", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
                .field("likes", 0)
                
-               console.log(res.body)
                chai.expect(res.status).to.be.eq(202)
                chai.expect(res.body.message).to.be.eq("article created")
           })
@@ -216,29 +216,12 @@ describe("ARTICLES", () => {
      })
 
      describe("DELETE COMMENTS", () => {
-          // before(async() => {
-          //      let testSchema = new dbSchema ({
-          //      title: "Test article",
-          //      content: "Lorem ipsum",
-          //      image: "URL",
-          //      comments: [{
-          //           name: "gabin", 
-          //           content: "nice article"
-          //      },
-          //      {
-          //           name: "ishimwe", 
-          //           content: "good article"
-          //      }],
-          //      likes: 0
-          //      })
-          //      await testSchema.save()
-          // })
           
           it("it should delete all comments", async() => {
                const token = await generateToken({id: testSchema._id})
                const res = await chai.request(app).delete("/api/v1/articles/" + testSchema._id + "/deleteComments")
                .set({"Authorization": `Bearer ${token}`})
-               console.log(res.body)
+               // console.log(res.body)
                chai.expect(res.status).to.be.eq(202)
                // chai.expect(res.body.message).to.be.eq("there are no comments")
           })

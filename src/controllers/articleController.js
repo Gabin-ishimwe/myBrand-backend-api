@@ -3,10 +3,6 @@ import dbSchema from "../models/article"
 import { uploading } from "../helpers/uploadFile"
 import res from "express/lib/response"
 export default class ArticleController {
-    // TODO Don't access database from this file you only needs
-    // constructor(_dbSchema) {
-    //     this.schema = dbSchema
-    // }
     static async createArticle(req, res) { 
         try {
             req.body.image = await uploading(req, res)
@@ -16,7 +12,7 @@ export default class ArticleController {
                 image: req.body.image,
             })
             await ArticleServices.createArticle(newArticle)
-            console.log("saved article")
+            // console.log("saved article")
             res.status(202).send({message: "article created", data: newArticle})
 
         }catch(error) {
@@ -49,7 +45,7 @@ export default class ArticleController {
         
             if(req.body.title){
                 updating.title = req.body.title
-                console.log("updating title....")
+                // console.log("updating title....")
             }
             if(req.body.content) {
                 updating.content = req.body.content
@@ -68,22 +64,6 @@ export default class ArticleController {
             
         }
         
-        // console.log(updating)
-        // console.log(req)
-        // console.log(req.body.image)
-        // console.log(req.body.content)
-
-        // try {
-        //     const updating = await dbSchema.updateOne({_id:req.params.id}, {
-        //     $set: {title: req.body.title, content: req.body.content, image: req.body.image}}
-        // )
-        // console.log("updating...")
-        // await ArticleServices.updateArticle(updating)
-        // res.json(updating)
-        // console.log(updating)
-        // } catch (error) {
-        //     res.send(error)
-        // }
         
     }
     static async deleteArticle(req, res, next) {

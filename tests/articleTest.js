@@ -24,8 +24,18 @@ describe("ARTICLES", () => {
                }],
                likes: 0
           })
+
+     let testArticleComment = new dbSchema ({
+               title: "Test article comment",
+               content: "Lorem ipsum",
+               image: "URL",
+               comments: [],
+               likes: 0
+               })
      before(async () => {
           await testSchema.save()
+          await testArticleComment.save()
+
           
      })
      
@@ -119,7 +129,6 @@ describe("ARTICLES", () => {
 
 
           it("it should create an article", async ()=> {
-               console.log(__dirname)
                const token = await generateToken({id: testSchema._id})
                const res = await chai.request(app).post("/api/v1/articles/")
                .set({"Authorization": `Bearer ${token}`})
@@ -202,12 +211,7 @@ describe("ARTICLES", () => {
           })
 
           it("it should create a comment", async() => {
-               // let commentTest = new commentSchema({
-               //      name: "gabin",
-               //      content: "nice article"
-               // })
-               // await commentTest.save()
-               const res = await chai.request(app).post("/api/v1/articles/" + testSchema._id + "/addComment")
+               const res = await chai.request(app).post("/api/v1/articles/" + testArticleComment._id + "/addComment")
                .send({
                     name: "gabin",
                     content: "nice article"
@@ -220,7 +224,7 @@ describe("ARTICLES", () => {
           
           it("it should delete all comments", async() => {
                const token = await generateToken({id: testSchema._id})
-               const res = await chai.request(app).delete("/api/v1/articles/" + testSchema._id + "/deleteComments")
+               const res = await chai.request(app).delete("/api/v1/articles/" + testArticleComment._id + "/deleteComments")
                .set({"Authorization": `Bearer ${token}`})
                // console.log(res.body)
                chai.expect(res.status).to.be.eq(202)
@@ -229,7 +233,7 @@ describe("ARTICLES", () => {
 
           it("it should check that there are no comments to delete", async() => {
                const token = await generateToken({id: testSchema._id})
-               const res = await chai.request(app).delete("/api/v1/articles/" + testSchema._id + "/deleteComments/")         
+               const res = await chai.request(app).delete("/api/v1/articles/" + testArticleComment._id + "/deleteComments/")         
                .set({"Authorization": `Beare ${token}`})
                chai.expect(res.status).to.be.eq(205)
                chai.expect(res.body.message).to.be.eq("there are no comments")

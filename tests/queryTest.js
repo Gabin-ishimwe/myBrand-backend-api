@@ -131,12 +131,12 @@ describe("QUERIES END POINTS", () => {
                chai.expect(res.body.message).to.be.eq("query deleted")
           })
 
-          it("it should not delete on wrong route", async() => {
-               const token = await generateToken({id: testSchema._id})
-               const res = await chai.request(app).delete("/api/v1/queries/dele/" + testSchema._id)
-               .set({"Authorization": `Bearer ${token}`})
-               chai.expect(res.status).to.be.eq(404)
-               chai.expect(res.body).have.property("error")
-          })
+          // it("it should not delete on wrong route", async() => {
+          //      const token = await generateToken({id: testSchema._id})
+          //      const res = await chai.request(app).delete("/api/v1/queries/dele/" + testSchema._id)
+          //      .set({"Authorization": `Bearer ${token}`})
+          //      chai.expect(res.status).to.be.eq(404)
+          //      chai.expect(res.body).have.property("error")
+          // })
      })
 })

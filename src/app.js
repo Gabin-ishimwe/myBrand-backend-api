@@ -14,6 +14,7 @@ const mode = process.env.NODE_ENV || 'development'
 const server = async () => {
     try {
         if (mode === "development") {
+            console.log(process.env.DEVELOPMENT_DB)
             await mongoose.connect(process.env.DEVELOPMENT_DB, { useNewUrlParser: true })
             .then(() => {
                 console.log("DEV DB CONNECTED")
@@ -30,12 +31,13 @@ const server = async () => {
             })
         }
         app.use(express.json())
+        app.use(morgan("dev"))
+        app.use(cors())
         app.use("/api/v1/", routes)
         app.get("/", (req, res) => {
             res.send("Welcome to my API")
         })
-        app.use(morgan("dev"))
-        app.use(cors())
+    
         app.use("/api-documents", swaggerUI.serve, swaggerUI.setup(swaggerDocument))
         app.use("*", (req, res) => {
             res.status(404).send({

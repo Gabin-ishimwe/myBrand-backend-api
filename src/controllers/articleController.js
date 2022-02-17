@@ -51,7 +51,7 @@ export default class ArticleController {
                 updating.content = req.body.content
             }
 
-            if(req.body.image) {
+            if(req.file) {
                 req.body.image = await uploading(req, res)
                 updating.image = req.body.image
             }
